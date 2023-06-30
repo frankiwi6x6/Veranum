@@ -1,0 +1,45 @@
+{% block detalle_reserva %}
+{% if reserva_actual %}
+{% if reserva_actual %}
+  <p>Fecha de entrada: {{ reserva_actual.fecha_entrada }}</p>
+  <p>Fecha de salida: {{ reserva_actual.fecha_salida }}</p>
+  <p>Habitación: {{ reserva_actual.habitacion.numeroHabitacion }}</p>
+  <!-- Otros detalles de la reserva -->
+
+  <button class="btn btn-danger" data-toggle="modal" data-target="#confirmarEliminarModal">Cancelar reserva</button>
+
+  <!-- Modal de confirmación de eliminación -->
+  <div class="modal fade" id="confirmarEliminarModal" tabindex="-1" role="dialog" aria-labelledby="confirmarEliminarModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmarEliminarModalLabel">Confirmación de cancelación de reserva</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>¿Estás seguro de que deseas cancelar esta reserva?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <form method="POST" action="{% url 'eliminar_reserva' reserva_actual.idReserva %}">
+            {% csrf_token %}
+            <input type="hidden" name="fecha_entrada" value="{{ reserva_actual.fecha_entrada }}">
+            <input type="hidden" name="fecha_salida" value="{{ reserva_actual.fecha_salida }}">
+            <input type="hidden" name="habitacion_id" value="{{ reserva_actual.habitacion.idHabitacion }}">
+            <!-- Otros campos ocultos con información adicional -->
+            <button type="submit" class="btn btn-danger">Sí, cancelar reserva</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{% else %}
+<p class="fw-bold">No hay reserva activa.</p>
+<a class="btn btn-primary " href="{% url 'buscar_habitaciones' %}">Reserva una habitación!</a>
+<!-- Agregar un enlace o un botón para redirigir a la página de reserva -->
+{% endif %}
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Modificar Subservicio</h1>
+  
+  <form method="POST" action="{% url 'guardar_modificacion_subservicio' subservicio.idSubservicio %}">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="nombre">Nombre:</label>
+      <input type="text" class="form-control" id="nombre" name="nombre" value="{{ subservicio.nombre }}">
+    </div>
+    <div class="form-group">
+      <label for="descripcion">Descripción:</label>
+      <textarea class="form-control" id="descripcion" name="descripcion">{{ subservicio.descripcion }}</textarea>
+    </div>
+    <div class="form-group">
+      <label for="horarioApertura">Horario de Apertura:</label>
+      <input type="text" class="form-control" id="horarioApertura" name="horarioApertura" value="{{ subservicio.horarioApertura }}">
+    </div>
+    <div class="form-group">
+      <label for="horarioCierre">Horario de Cierre:</label>
+      <input type="text" class="form-control" id="horarioCierre" name="horarioCierre" value="{{ subservicio.horarioCierre }}">
+    </div>
+    <!-- Otros campos de modificación -->
+
+    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+  </form>
+{% endblock %}
